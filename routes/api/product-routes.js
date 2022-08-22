@@ -11,7 +11,10 @@ router.get('/', (req, res) => {
     include: [{model: Category, Tag}]
   }).then(products => {
     res.status(200).json(products)
-  }).catch(error => res.status(500).json(error))
+  }).catch(error => {
+    console.log(error)
+    res.status(400).json(error)
+  })
 });
 
 // get one product
@@ -22,17 +25,20 @@ router.get('/:id', (req, res) => {
     include: [{model: Category, Tag}]
   }).then(products => {
     res.status(200).json(products)
-  }).catch(error => res.status(500).json(error))
+  }).catch(error => {
+    console.log(error)
+    res.status(400).json(error)
+  })
 });
 
 // create new product
 router.post('/', (req, res) => {
   /* req.body should look like this...
     {
-      product_name: "Basketball",
-      price: 200.00,
-      stock: 3,
-      tagIds: [1, 2, 3, 4]
+      "product_name": "Basketball",
+      "price": 200.00,
+      "stock": 3,
+      "tagIds": [1, 2, 3, 4]
     }
   */
   Product.create(req.body)
@@ -59,6 +65,11 @@ router.post('/', (req, res) => {
 
 // update product
 router.put('/:id', (req, res) => {
+    /* req.body should look like this...
+    {
+      "category_id": 3
+    }
+    */
   // update product data
   Product.update(req.body, {
     where: {
@@ -101,6 +112,16 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(products => {
+    res.status(200).json(products)
+  }).catch(error => {
+    console.log(error)
+    res.status(400).json(error)
+  })
 });
 
 module.exports = router;
