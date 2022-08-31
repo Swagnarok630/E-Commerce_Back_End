@@ -26,7 +26,7 @@ Back end code developed for an already existing example E-Commerce database. Cod
    * Categories
    * Products
    * Tags
-   * Product Tages
+   * Product Tags
 * API will have proper GET all and GET by ID routes for:
    * Categories
    * Products
